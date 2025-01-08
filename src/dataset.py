@@ -78,6 +78,3 @@ p_16.to_pickle("../data/processed/p_16.pkl")
 p_18.to_pickle("../data/processed/p_18.pkl")
 p_20.to_pickle("../data/processed/p_20.pkl")
 weather.to_pickle("../data/processed/weather.pkl")
- 
-
- hello
