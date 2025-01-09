@@ -9,11 +9,6 @@ plt.rcParams["figure.figsize"] = [20, 5]
 plt.rcParams["figure.dpi"] = 100
 plt.rcParams["axes.prop_cycle"] = plt.cycler(
     "color",
-    ["#E24A33", "#348ABD", "#988ED5", "#777777", "#FBC15E", "#8EBA42", "#FFB5B8"],
-)
-
-plt.rcParams["axes.prop_cycle"] = plt.cycler(
-    "color",
     ["#333333", "#CC0000", "#00CC00", "#000099", "#CCCC00", "#00CCCC", "#CC00CC"],
 )
 plt.rcParams["lines.linewidth"] = 2
