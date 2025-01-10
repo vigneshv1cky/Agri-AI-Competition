@@ -181,13 +181,11 @@ for pasture_name, df in pasture_daily_data.items():
 # Filter Data by Growth Conditions and Merge with Weather
 # ------------------------------------------------------
 
-filtered_dfs = []
+filtered_dfs = {}
 
 for pasture_name, df in pasture_daily_data.items():
     # Filter growth conditions for the current pasture
     filtered_growth = growth_conditions_df.query("Pasture == @pasture_name")
-
-    # Initialize an empty DataFrame for the filtered data
     final_df = pd.DataFrame()
 
     # Iterate through each row in the filtered growth conditions
@@ -208,7 +206,6 @@ for pasture_name, df in pasture_daily_data.items():
             & (weather["Date"].dt.year == year)
         )
 
-        # Filter data based on the masks
         temp_filtered_df = df.loc[mask_df]
         temp_filtered_weather = weather.loc[mask_weather]
 
@@ -221,7 +218,7 @@ for pasture_name, df in pasture_daily_data.items():
         final_df = pd.concat([final_df, temp_merged], ignore_index=True)
 
     # Add the filtered data to the list
-    filtered_dfs.append(final_df)
+    filtered_dfs[pasture_name] = final_df
 
 # ------------------------------------------------------
 # Concatenate Filtered DataFrames
@@ -234,9 +231,28 @@ total_df_filtered = pd.concat(filtered_dfs, ignore_index=True)
 total_df_filtered["Date"] = pd.to_datetime(total_df_filtered["Date"])
 total_df_filtered = total_df_filtered.sort_values(by="Date")
 
+for pasture_name, df in filtered_dfs.items():
+    print(pasture_name)
+
+p_13_daily_filtered = filtered_dfs.get("P13")
+p_14_daily_filtered = filtered_dfs.get("P14")
+p_15_daily_filtered = filtered_dfs.get("P16")
+p_16_daily_filtered = filtered_dfs.get("P16")
+p_18_daily_filtered = filtered_dfs.get("P18")
+p_20_daily_filtered = filtered_dfs.get("P20")
 
 # ------------------------------------------------------
 # Save Dataframe as pickle
 # ------------------------------------------------------
 
-total_df_filtered.to_pickle("../data/interim/total_df_filtered.pkl")
+output_directory = "../data/interim/"
+
+# Save each dataframe as a pickle file
+p_13_daily_filtered.to_pickle(f"{output_directory}p_13_daily_filtered.pkl")
+p_14_daily_filtered.to_pickle(f"{output_directory}p_14_daily_filtered.pkl")
+p_15_daily_filtered.to_pickle(f"{output_directory}p_15_daily_filtered.pkl")
+p_16_daily_filtered.to_pickle(f"{output_directory}p_16_daily_filtered.pkl")
+p_18_daily_filtered.to_pickle(f"{output_directory}p_18_daily_filtered.pkl")
+p_20_daily_filtered.to_pickle(f"{output_directory}p_20_daily_filtered.pkl")
+
+total_df_filtered.to_pickle(f"{output_directory}total_df_filtered.pkl")
