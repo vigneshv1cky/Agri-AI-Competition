@@ -233,3 +233,10 @@ total_df_filtered = pd.concat(filtered_dfs, ignore_index=True)
 # Ensure 'Date' is in datetime format and sort by 'Date'
 total_df_filtered["Date"] = pd.to_datetime(total_df_filtered["Date"])
 total_df_filtered = total_df_filtered.sort_values(by="Date")
+
+
+# ------------------------------------------------------
+# Save Dataframe as pickle
+# ------------------------------------------------------
+
+total_df_filtered.to_pickle("../data/interim/total_df_filtered.pkl")
